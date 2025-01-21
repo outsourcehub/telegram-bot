@@ -15,7 +15,7 @@ CUSTOM_KEYBOARD = [
 ]
 
 # Welcome message
-WELCOME_MESSAGE = "Welcome, we already prepared all you'll need to get started in our start up guide, we will also send you scalping tips and toolsfrom time to time, we are in this together."
+WELCOME_MESSAGE = "Have you read the first message before /start command? 🧐  We prepared all you'll need to get started in our start up guide but it doesn't end there, we will also send you scalping tutorials, reports and useful tools from time to time. Welcome on board 👍 🥳"
 
 # Command handler for /start
 async def start(update: Update, context: CallbackContext):
