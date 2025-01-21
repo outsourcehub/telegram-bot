@@ -2,9 +2,9 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext
 
 # Replace 'YOUR_BOT_TOKEN' with your bot's API token from BotFather
-BOT_TOKEN = 'YOUR_BOT_TOKEN'
+BOT_TOKEN = '7590976238:AAFp4kEK0iVkYLid2SIWPuOgv0r6zqL1oO0'
 
-# Replace '7590976238:AAFp4kEK0iVkYLid2SIWPuOgv0r6zqL1oO0' with your Telegram user ID (explained below)
+# Replace 'YOUR_USER_ID' with your Telegram user ID (explained below)
 YOUR_USER_ID = 6601959348
 
 # Custom buttons with links
