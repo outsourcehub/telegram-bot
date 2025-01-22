@@ -1,11 +1,12 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext
+from flask import Flask  # Import Flask for the web server
+import os
+import threading
 
-# Replace 'YOUR_BOT_TOKEN' with your bot's API token from BotFather
-BOT_TOKEN = '7590976238:AAFp4kEK0iVkYLid2SIWPuOgv0r6zqL1oO0'
-
-# Replace 'YOUR_USER_ID' with your Telegram user ID (explained below)
-YOUR_USER_ID = 6601959348
+# Replace these with your actual values
+BOT_TOKEN = os.environ.get('BOT_TOKEN')  # Get the bot token from environment variables
+YOUR_USER_ID = int(os.environ.get('YOUR_USER_ID'))  # Get your user ID from environment variables
 
 # Custom buttons with links
 CUSTOM_KEYBOARD = [
@@ -15,7 +16,7 @@ CUSTOM_KEYBOARD = [
 ]
 
 # Welcome message
-WELCOME_MESSAGE = "Have you read the first message before /start command?🧐 We prepared all you'll need to get started in our start up guide but it doesn't end there, we will also send you scalping tutorials, reports and useful tools from time to time. Welcome on board 👍 🥳"
+WELCOME_MESSAGE = "Welcome to the bot! Use the buttons below to get started."
 
 # Command handler for /start
 async def start(update: Update, context: CallbackContext):
@@ -46,8 +47,23 @@ async def broadcast(update: Update, context: CallbackContext):
             except Exception as e:
                 print(f"Failed to send message to {user_id}: {e}")
 
+# Create a simple Flask web server
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Bot is running!"
+
+def run_flask():
+    app.run(host='0.0.0.0', port=10000)  # Run the web server on port 10000
+
 # Main function to run the bot
 def main():
+    # Start the Flask web server in a separate thread
+    flask_thread = threading.Thread(target=run_flask)
+    flask_thread.daemon = True  # This ensures the thread stops when the main program stops
+    flask_thread.start()
+
     # Create the bot application
     application = Application.builder().token(BOT_TOKEN).build()
 
