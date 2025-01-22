@@ -1,8 +1,6 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext
-from flask import Flask  # Import Flask for the web server
 import os
-import threading
 
 # Replace these with your actual values
 BOT_TOKEN = os.environ.get('BOT_TOKEN')  # Get the bot token from environment variables
@@ -47,23 +45,8 @@ async def broadcast(update: Update, context: CallbackContext):
             except Exception as e:
                 print(f"Failed to send message to {user_id}: {e}")
 
-# Create a simple Flask web server
-app = Flask(__name__)
-
-@app.route('/')
-def home():
-    return "Bot is running!"
-
-def run_flask():
-    app.run(host='0.0.0.0', port=10000)  # Run the web server on port 10000
-
 # Main function to run the bot
 def main():
-    # Start the Flask web server in a separate thread
-    flask_thread = threading.Thread(target=run_flask)
-    flask_thread.daemon = True  # This ensures the thread stops when the main program stops
-    flask_thread.start()
-
     # Create the bot application
     application = Application.builder().token(BOT_TOKEN).build()
 
@@ -71,7 +54,7 @@ def main():
     application.add_handler(CommandHandler("start", start))  # Handle /start command
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, broadcast))  # Handle broadcast messages
 
-    # Start the bot
+    # Start the bot using polling
     application.run_polling()
 
 # Run the bot
